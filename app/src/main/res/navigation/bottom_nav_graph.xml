@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav_graph"
+    app:startDestination="@id/menu_explore">
+
+    <fragment
+        android:id="@+id/menu_explore"
+        android:name="com.nalldev.gent.home.ui.fragment.explore.ExploreFragment"
+        android:label="fragment_explore"
+        tools:layout="@layout/fragment_explore" />
+    <fragment
+        android:id="@+id/menu_about"
+        android:name="com.nalldev.gent.home.ui.fragment.about.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/menu_bookmark"
+        android:name="com.nalldev.gent.home.ui.fragment.bookmark.BookmarkFragment"
+        android:label="fragment_bookmark"
+        tools:layout="@layout/fragment_bookmark" />
+    <fragment
+        android:id="@+id/menu_finished"
+        android:name="com.nalldev.gent.home.ui.fragment.finished.FinishedFragment"
+        android:label="fragment_finished"
+        tools:layout="@layout/fragment_finished" />
+    <fragment
+        android:id="@+id/menu_upcoming"
+        android:name="com.nalldev.gent.home.ui.fragment.upcoming.UpcomingFragment"
+        android:label="fragment_upcoming"
+        tools:layout="@layout/fragment_upcoming" />
+</navigation>

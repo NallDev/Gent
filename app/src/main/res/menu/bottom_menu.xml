@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_upcoming"
+        android:title="@string/upcoming"
+        android:icon="@drawable/ic_upcoming"/>
+
+    <item android:id="@+id/menu_finished"
+        android:title="@string/finished"
+        android:icon="@drawable/ic_finished"/>
+
+    <item android:id="@+id/menu_explore"
+        android:title="@string/explore"
+        android:icon="@drawable/ic_explore"/>
+
+    <item android:id="@+id/menu_bookmark"
+        android:title="@string/bookmark"
+        android:icon="@drawable/ic_bookmark"/>
+
+    <item android:id="@+id/menu_about"
+        android:title="@string/about"
+        android:icon="@drawable/ic_about"/>
+
+</menu>
