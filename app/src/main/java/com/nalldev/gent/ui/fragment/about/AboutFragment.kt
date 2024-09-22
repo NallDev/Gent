@@ -1,4 +1,4 @@
-package com.nalldev.gent.home.ui.fragment.about
+package com.nalldev.gent.ui.fragment.about
 
 import android.os.Bundle
 import android.view.LayoutInflater

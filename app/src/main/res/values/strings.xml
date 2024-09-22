@@ -5,6 +5,14 @@
     <string name="explore">Explore</string>
     <string name="bookmark">Bookmark</string>
     <string name="about">About</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_internet">No Internet Connection</string>
+
+    <string name="error_code_400">Oops! Something went wrong. Please check your input and try again.</string>
+    <string name="error_code_401">Your session has expired. Please log in again.</string>
+    <string name="error_code_403">Sorry, you don\'t have permission to access this resource.</string>
+    <string name="error_code_404">We couldn\'t find what you\'re looking for.</string>
+    <string name="error_code_408">The request timed out. Please try again.</string>
+    <string name="error_code_429">You\'re making requests too quickly. Please slow down.</string>
+    <string name="error_code_500">We\'re experiencing some issues. Please try again later.</string>
+    <string name="error_code_default">An unexpected error occurred. Please try again.</string>
 </resources>

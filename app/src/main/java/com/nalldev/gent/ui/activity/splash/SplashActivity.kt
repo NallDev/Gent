@@ -1,4 +1,4 @@
-package com.nalldev.gent.splash
+package com.nalldev.gent.ui.activity.splash
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.nalldev.gent.home.ui.activity.MainActivity
+import com.nalldev.gent.ui.activity.main.MainActivity
 import com.nalldev.gent.R
 import com.nalldev.gent.databinding.ActivitySplashBinding
 

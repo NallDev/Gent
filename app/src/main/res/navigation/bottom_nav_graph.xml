@@ -7,27 +7,27 @@
 
     <fragment
         android:id="@+id/menu_explore"
-        android:name="com.nalldev.gent.home.ui.fragment.explore.ExploreFragment"
+        android:name="com.nalldev.gent.ui.fragment.explore.ExploreFragment"
         android:label="fragment_explore"
         tools:layout="@layout/fragment_explore" />
     <fragment
         android:id="@+id/menu_about"
-        android:name="com.nalldev.gent.home.ui.fragment.about.AboutFragment"
+        android:name="com.nalldev.gent.ui.fragment.about.AboutFragment"
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/menu_bookmark"
-        android:name="com.nalldev.gent.home.ui.fragment.bookmark.BookmarkFragment"
+        android:name="com.nalldev.gent.ui.fragment.bookmark.BookmarkFragment"
         android:label="fragment_bookmark"
         tools:layout="@layout/fragment_bookmark" />
     <fragment
         android:id="@+id/menu_finished"
-        android:name="com.nalldev.gent.home.ui.fragment.finished.FinishedFragment"
+        android:name="com.nalldev.gent.ui.fragment.finished.FinishedFragment"
         android:label="fragment_finished"
         tools:layout="@layout/fragment_finished" />
     <fragment
         android:id="@+id/menu_upcoming"
-        android:name="com.nalldev.gent.home.ui.fragment.upcoming.UpcomingFragment"
+        android:name="com.nalldev.gent.ui.fragment.upcoming.UpcomingFragment"
         android:label="fragment_upcoming"
         tools:layout="@layout/fragment_upcoming" />
 </navigation>

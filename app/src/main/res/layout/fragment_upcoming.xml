@@ -4,6 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".home.ui.fragment.upcoming.UpcomingFragment">
+    tools:context=".ui.fragment.upcoming.UpcomingFragment">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
