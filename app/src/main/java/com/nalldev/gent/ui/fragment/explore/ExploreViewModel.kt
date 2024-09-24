@@ -7,55 +7,73 @@ import androidx.lifecycle.viewModelScope
 import com.nalldev.gent.domain.models.EventModel
 import com.nalldev.gent.domain.repositories.HomeRepository
 import com.nalldev.gent.utils.UIState
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 
 class ExploreViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     private val _upcomingEvent = MutableLiveData<UIState<List<EventModel>>>()
-    val upcomingEvent : LiveData<UIState<List<EventModel>>> = _upcomingEvent
+    val upcomingEvent: LiveData<UIState<List<EventModel>>> = _upcomingEvent
 
     private val _finishedEvent = MutableLiveData<UIState<List<EventModel>>>()
-    val finishedEvent : LiveData<UIState<List<EventModel>>> = _finishedEvent
+    val finishedEvent: LiveData<UIState<List<EventModel>>> = _finishedEvent
 
-    private val mutex = Mutex()
+    private var fetchJob: Job? = null
 
-    fun fetchEvent() = viewModelScope.launch {
-        mutex.withLock {
+    fun fetchEvent() {
+        if (fetchJob?.isActive == true) return
+
+        fetchJob = viewModelScope.launch {
             _upcomingEvent.postValue(UIState.Loading)
             _finishedEvent.postValue(UIState.Loading)
 
-            try {
-                val upcomingEventList = async { homeRepository.fetchEvent(1) }
-                val finishedEventList = async { homeRepository.fetchEvent(0) }
-
-                _upcomingEvent.postValue(UIState.Success(upcomingEventList.await()))
-                _finishedEvent.postValue(UIState.Success(finishedEventList.await()))
-            } catch (e: Exception) {
-                _upcomingEvent.postValue(UIState.Error(e.message.toString()))
-                _finishedEvent.postValue(UIState.Error(e.message.toString()))
+            val upcomingEventResult = async {
+                try {
+                    val upcomingEventList = homeRepository.fetchEvent(1)
+                    UIState.Success(upcomingEventList)
+                } catch (e: Exception) {
+                    UIState.Error(e.message.toString())
+                }
             }
+
+            val finishedEventResult = async {
+                try {
+                    val finishedEventList = homeRepository.fetchEvent(0)
+                    UIState.Success(finishedEventList)
+                } catch (e: Exception) {
+                    UIState.Error(e.message.toString())
+                }
+            }
+
+            _upcomingEvent.postValue(upcomingEventResult.await())
+            _finishedEvent.postValue(finishedEventResult.await())
         }
     }
 
     fun getUpcomingEvent() = viewModelScope.launch {
         _upcomingEvent.postValue(UIState.Loading)
-        try {
-            val upcomingEventList = homeRepository.getUpcomingEvent()
-            _upcomingEvent.postValue(UIState.Success(upcomingEventList))
-        } catch (e : Exception) {
-            _upcomingEvent.postValue(UIState.Error(e.message.toString()))
+        val upcomingEventResult = async {
+            try {
+                val upcomingEventList = homeRepository.getUpcomingEvent()
+                UIState.Success(upcomingEventList)
+            } catch (e: Exception) {
+                UIState.Error(e.message.toString())
+            }
         }
+
+        _upcomingEvent.postValue(upcomingEventResult.await())
     }
 
-    fun getFinishedEvent() = viewModelScope.launch{
+    fun getFinishedEvent() = viewModelScope.launch {
         _finishedEvent.postValue(UIState.Loading)
-        try {
-            val finishedEventList = homeRepository.getFinishedEvent()
-            _finishedEvent.postValue(UIState.Success(finishedEventList))
-        } catch (e : Exception) {
-            _finishedEvent.postValue(UIState.Error(e.message.toString()))
+        val finishedEvent = async {
+            try {
+                val finishedEventList = homeRepository.getFinishedEvent()
+                UIState.Success(finishedEventList)
+            } catch (e: Exception) {
+                UIState.Error(e.message.toString())
+            }
         }
+        _finishedEvent.postValue(finishedEvent.await())
     }
 }

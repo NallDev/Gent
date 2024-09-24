@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.carousel.CarouselLayoutManager
+import com.google.android.material.carousel.CarouselSnapHelper
+import com.google.android.material.carousel.HeroCarouselStrategy
 import com.nalldev.gent.databinding.FragmentExploreBinding
 import com.nalldev.gent.utils.UIState
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
@@ -14,6 +17,10 @@ class ExploreFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel by activityViewModel<ExploreViewModel>()
+
+    private val exploreAdapter by lazy { ExploreAdapter() }
+
+    private val snapHelper by lazy { CarouselSnapHelper() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,42 +39,41 @@ class ExploreFragment : Fragment() {
     }
 
     private fun initObserver() {
-        viewModel.finishedEvent.observe(viewLifecycleOwner) { state ->
+        viewModel.upcomingEvent.observe(viewLifecycleOwner) { state ->
             when(state) {
                 is UIState.Error -> {
-                    println("ERROR FINISHED : ${state.message}")
+
                 }
                 is UIState.Loading -> {
-                    println("LOADING FINISHED EVENT")
+
                 }
                 is UIState.Success -> {
-                    if (state.data.isEmpty()) {
-                        viewModel.fetchEvent()
-                    }
-                    println("SUCCESS FINISHED : ${state.data}")
                 }
             }
         }
 
-        viewModel.upcomingEvent.observe(viewLifecycleOwner) { state ->
+        viewModel.finishedEvent.observe(viewLifecycleOwner) { state ->
             when(state) {
                 is UIState.Error -> {
-                    println("ERROR UPCOMING : ${state.message}")
                 }
                 is UIState.Loading -> {
-                    println("LOADING UPCOMING EVENT")
                 }
                 is UIState.Success -> {
-                    if (state.data.isEmpty()) {
-                        viewModel.fetchEvent()
-                    }
-                    println("SUCCESS UPCOMING : ${state.data}")
+                    println("SIZE OF UPCOMING : ${state.data.size}")
+                    exploreAdapter.submitList(state.data)
                 }
             }
         }
     }
 
     private fun initView() {
+        snapHelper.attachToRecyclerView(binding.rvUpcomingEvent)
+        binding.rvUpcomingEvent.layoutManager = CarouselLayoutManager().apply {
+            setCarouselStrategy(HeroCarouselStrategy())
+            setCarouselAlignment(CarouselLayoutManager.ALIGNMENT_CENTER)
+        }
+        binding.rvUpcomingEvent.adapter = exploreAdapter
+
         viewModel.getUpcomingEvent()
         viewModel.getFinishedEvent()
     }

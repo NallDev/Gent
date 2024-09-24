@@ -15,4 +15,8 @@
     <string name="error_code_429">You\'re making requests too quickly. Please slow down.</string>
     <string name="error_code_500">We\'re experiencing some issues. Please try again later.</string>
     <string name="error_code_default">An unexpected error occurred. Please try again.</string>
+    <string name="upcoming_events">Upcoming Events</string>
+    <string name="see_all">See All</string>
+
+    <string name="seats_left">%d Seats left</string>
 </resources>
