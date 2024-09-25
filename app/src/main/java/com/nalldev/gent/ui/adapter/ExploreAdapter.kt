@@ -1,4 +1,4 @@
-package com.nalldev.gent.ui.fragment.explore
+package com.nalldev.gent.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,6 +9,7 @@ import coil.load
 import com.nalldev.gent.R
 import com.nalldev.gent.databinding.ItemUpcomingCaraouselBinding
 import com.nalldev.gent.domain.models.EventModel
+import com.nalldev.gent.utils.DateHelper
 
 class ExploreAdapter : ListAdapter<EventModel, ExploreAdapter.ViewHolder>(this) {
     inner class ViewHolder(val binding : ItemUpcomingCaraouselBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -17,10 +18,7 @@ class ExploreAdapter : ListAdapter<EventModel, ExploreAdapter.ViewHolder>(this) 
                 crossfade(true)
                 error(R.drawable.event)
             }
-//            binding.tvNameEvent.text = eventModel.name
-//            binding.tvPlaceEvent.text = eventModel.cityName
-//            binding.tvQuotaEvent.text = binding.root.context.getString(R.string.seats_left, (eventModel.quota - eventModel.registrants))
-//            binding.tvDateEvent.text = DateHelper.changeFormat("yyyy-MM-dd HH:mm:ss", "dd'\n'MMM", eventModel.beginTime)
+            binding.tvDateEvent.text = DateHelper.changeFormat("yyyy-MM-dd HH:mm:ss", "dd'\n'MMM", eventModel.beginTime)
         }
     }
 

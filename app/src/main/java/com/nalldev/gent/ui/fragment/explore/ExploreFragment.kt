@@ -9,6 +9,9 @@ import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
 import com.google.android.material.carousel.HeroCarouselStrategy
 import com.nalldev.gent.databinding.FragmentExploreBinding
+import com.nalldev.gent.ui.adapter.ExploreAdapter
+import com.nalldev.gent.ui.adapter.EventAdapter
+import com.nalldev.gent.utils.SpacingItemDecoration
 import com.nalldev.gent.utils.UIState
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
@@ -18,7 +21,9 @@ class ExploreFragment : Fragment() {
 
     private val viewModel by activityViewModel<ExploreViewModel>()
 
-    private val exploreAdapter by lazy { ExploreAdapter() }
+    private val upcomingEventAdapter by lazy { ExploreAdapter() }
+
+    private val finishedEventAdapter by lazy { EventAdapter() }
 
     private val snapHelper by lazy { CarouselSnapHelper() }
 
@@ -48,6 +53,7 @@ class ExploreFragment : Fragment() {
 
                 }
                 is UIState.Success -> {
+                    upcomingEventAdapter.submitList(state.data)
                 }
             }
         }
@@ -59,8 +65,7 @@ class ExploreFragment : Fragment() {
                 is UIState.Loading -> {
                 }
                 is UIState.Success -> {
-                    println("SIZE OF UPCOMING : ${state.data.size}")
-                    exploreAdapter.submitList(state.data)
+                    finishedEventAdapter.submitList(state.data)
                 }
             }
         }
@@ -72,14 +77,21 @@ class ExploreFragment : Fragment() {
             setCarouselStrategy(HeroCarouselStrategy())
             setCarouselAlignment(CarouselLayoutManager.ALIGNMENT_CENTER)
         }
-        binding.rvUpcomingEvent.adapter = exploreAdapter
+        binding.rvUpcomingEvent.adapter = upcomingEventAdapter
+
+        finishedEventAdapter.hideBookmark()
+        binding.rvFinishedEvent.addItemDecoration(SpacingItemDecoration(1, 16, true))
+        binding.rvFinishedEvent.adapter = finishedEventAdapter
 
         viewModel.getUpcomingEvent()
         viewModel.getFinishedEvent()
     }
 
     private fun initListener() {
-
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing = false
+            viewModel.fetchEvent()
+        }
     }
 
     override fun onDestroy() {

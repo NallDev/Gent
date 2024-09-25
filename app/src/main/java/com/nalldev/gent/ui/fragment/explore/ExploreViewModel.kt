@@ -30,7 +30,7 @@ class ExploreViewModel(private val homeRepository: HomeRepository) : ViewModel()
             val upcomingEventResult = async {
                 try {
                     val upcomingEventList = homeRepository.fetchEvent(1)
-                    UIState.Success(upcomingEventList)
+                    UIState.Success(upcomingEventList.take(5))
                 } catch (e: Exception) {
                     UIState.Error(e.message.toString())
                 }
@@ -39,7 +39,7 @@ class ExploreViewModel(private val homeRepository: HomeRepository) : ViewModel()
             val finishedEventResult = async {
                 try {
                     val finishedEventList = homeRepository.fetchEvent(0)
-                    UIState.Success(finishedEventList)
+                    UIState.Success(finishedEventList.take(5))
                 } catch (e: Exception) {
                     UIState.Error(e.message.toString())
                 }

@@ -41,5 +41,6 @@ object DataMapper {
         quota = event.quota,
         registrants = event.registrants,
         link = event.link,
+        isBookmark = false
     )
 }

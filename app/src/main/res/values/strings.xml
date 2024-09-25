@@ -19,4 +19,6 @@
     <string name="see_all">See All</string>
 
     <string name="seats_left">%d Seats left</string>
+    <string name="seats_left_new_line">%d\nSeats left</string>
+    <string name="finished_event">Finished Event</string>
 </resources>

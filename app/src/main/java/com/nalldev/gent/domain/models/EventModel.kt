@@ -14,4 +14,5 @@ data class EventModel(
     val quota : Int,
     val registrants : Int,
     val link : String,
+    val isBookmark: Boolean
 )

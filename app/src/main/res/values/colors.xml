@@ -18,4 +18,6 @@
     <color name="colorOnError">#FFFFFF</color>
 
     <color name="outline">#d8d5dc</color>
+
+    <color name="colorSurface40">#33EB5757</color>
 </resources>
