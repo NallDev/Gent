@@ -1,5 +1,6 @@
 package com.nalldev.gent.di
 
+import com.nalldev.gent.data.datasources.local.EventBookmarkDao
 import com.nalldev.gent.data.datasources.local.EventDao
 import com.nalldev.gent.data.datasources.local.LocalDatasource
 import com.nalldev.gent.data.datasources.remote.ApiService
@@ -10,7 +11,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 fun provideRemoteDatasource(apiService: ApiService, ioDispatcher: CoroutineDispatcher): RemoteDatasource = RemoteDatasource(apiService, ioDispatcher)
-fun provideLocalDatasource(eventDao: EventDao, ioDispatcher: CoroutineDispatcher): LocalDatasource = LocalDatasource(eventDao, ioDispatcher)
+fun provideLocalDatasource(eventDao: EventDao, eventBookmarkDao: EventBookmarkDao, ioDispatcher: CoroutineDispatcher): LocalDatasource = LocalDatasource(eventDao, eventBookmarkDao, ioDispatcher)
 
 val datasourceModule = module {
     single(named("IODispatcher")) {
@@ -18,5 +19,5 @@ val datasourceModule = module {
     }
 
     factory { provideRemoteDatasource(get(), get(named("IODispatcher"))) }
-    factory { provideLocalDatasource(get(), get(named("IODispatcher"))) }
+    factory { provideLocalDatasource(get(), get(), get(named("IODispatcher"))) }
 }

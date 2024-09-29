@@ -2,7 +2,6 @@ package com.nalldev.gent.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -16,7 +15,7 @@ import com.nalldev.gent.utils.DateHelper
 class EventAdapter(val eventListener: EventListener? = null) : ListAdapter<EventModel, EventAdapter.ViewHolder>(this) {
     private var hideBookmark = false
 
-    inner class ViewHolder(val binding : ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding : ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(eventData : EventModel) {
             binding.ivImageEvent.load(eventData.image) {
                 crossfade(true)
@@ -24,19 +23,16 @@ class EventAdapter(val eventListener: EventListener? = null) : ListAdapter<Event
             }
             binding.tvNameEvent.text = eventData.name
             binding.tvPlaceEvent.text = eventData.cityName
-            binding.tvQuotaEvent.text = binding.root.context.getString(R.string.seats_left, (eventData.quota - eventData.registrants))
+            binding.tvSummaryEvent.text = eventData.summary
             binding.tvDateEvent.text = DateHelper.changeFormat("yyyy-MM-dd HH:mm:ss", "dd'\n'MMM", eventData.beginTime)
 
             binding.bookmarkToggleButton.isGone = hideBookmark
+            binding.bookmarkToggleButton.isChecked = eventData.isBookmark
             changeBookmark(eventData)
         }
 
         fun changeBookmark(eventData: EventModel) {
-            binding.bookmarkToggleButton.imageTintList = if (eventData.isBookmark) {
-                ContextCompat.getColorStateList(binding.root.context, R.color.colorSecondary)
-            } else {
-                ContextCompat.getColorStateList(binding.root.context, R.color.colorBackground)
-            }
+            binding.bookmarkToggleButton.isChecked = eventData.isBookmark
 
             binding.bookmarkToggleButton.setOnClickListener {
                 eventListener?.onBookmarkClicked(eventData)
@@ -80,7 +76,7 @@ class EventAdapter(val eventListener: EventListener? = null) : ListAdapter<Event
 
             if (oldItem.isBookmark != newItem.isBookmark) diffBundle.add(ItemEventChangePayload.ChangeBookmark(newItem))
 
-            return diffBundle
+            return diffBundle.ifEmpty { null }
         }
     }
 
@@ -89,6 +85,7 @@ class EventAdapter(val eventListener: EventListener? = null) : ListAdapter<Event
     }
 
     interface EventListener {
-        fun onBookmarkClicked(eventData: EventModel)
+        fun onBookmarkClicked(eventData: EventModel) {}
+        fun onItemClicked(eventData: EventModel) {}
     }
 }

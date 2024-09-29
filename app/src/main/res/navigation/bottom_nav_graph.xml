@@ -9,7 +9,14 @@
         android:id="@+id/menu_explore"
         android:name="com.nalldev.gent.ui.fragment.explore.ExploreFragment"
         android:label="fragment_explore"
-        tools:layout="@layout/fragment_explore" />
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/action_menu_explore_to_menu_upcoming"
+            app:destination="@id/menu_upcoming" />
+        <action
+            android:id="@+id/action_menu_explore_to_menu_finished"
+            app:destination="@id/menu_finished" />
+    </fragment>
     <fragment
         android:id="@+id/menu_about"
         android:name="com.nalldev.gent.ui.fragment.about.AboutFragment"

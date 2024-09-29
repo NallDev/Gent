@@ -1,6 +1,11 @@
-package com.nalldev.gent.domain.models
+package com.nalldev.gent.data.models
 
-data class EventModel(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "tb_event_bookmark")
+data class EventBookmarkEntity(
+    @PrimaryKey
     val id: Int,
     val name : String,
     val summary : String,
@@ -14,5 +19,4 @@ data class EventModel(
     val quota : Int,
     val registrants : Int,
     val link : String,
-    var isBookmark: Boolean
 )

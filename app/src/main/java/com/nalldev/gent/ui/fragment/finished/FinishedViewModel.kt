@@ -1,4 +1,4 @@
-package com.nalldev.gent.ui.fragment.explore
+package com.nalldev.gent.ui.fragment.finished
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,10 +12,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class ExploreViewModel(private val homeRepository: HomeRepository) : ViewModel() {
-    private val _upcomingEvent = MutableLiveData<UIState<List<EventModel>>>()
-    val upcomingEvent: LiveData<UIState<List<EventModel>>> = _upcomingEvent
-
+class FinishedViewModel(
+    private val homeRepository: HomeRepository
+) : ViewModel() {
     private val _finishedEvent = MutableLiveData<UIState<List<EventModel>>>()
     val finishedEvent: LiveData<UIState<List<EventModel>>> = _finishedEvent
 
@@ -24,26 +23,14 @@ class ExploreViewModel(private val homeRepository: HomeRepository) : ViewModel()
 
     private var fetchJob: Job? = null
 
-    fun fetchEvent() {
-        if (fetchJob?.isActive == true) return
-
+    fun fetchEvent(query : String = "") {
+        fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
-            _upcomingEvent.postValue(UIState.Loading)
             _finishedEvent.postValue(UIState.Loading)
-
-            val upcomingEventResult = async {
-                try {
-                    val upcomingEventList = homeRepository.fetchEvent(1).take(5)
-                    UIState.Success(upcomingEventList)
-                } catch (e: Exception) {
-                    _toastEvent.postValue(e.message)
-                    UIState.Error(e.message.toString())
-                }
-            }
 
             val finishedEventResult = async {
                 try {
-                    val finishedEventList = homeRepository.fetchEvent(0).take(5)
+                    val finishedEventList = homeRepository.fetchEvent(0, query)
                     UIState.Success(finishedEventList)
                 } catch (e: Exception) {
                     _toastEvent.postValue(e.message)
@@ -51,32 +38,15 @@ class ExploreViewModel(private val homeRepository: HomeRepository) : ViewModel()
                 }
             }
 
-            _upcomingEvent.postValue(upcomingEventResult.await())
             _finishedEvent.postValue(finishedEventResult.await())
-        }
-    }
-
-    fun getUpcomingEvent() = viewModelScope.launch {
-        _upcomingEvent.postValue(UIState.Loading)
-        try {
-            val upcomingEventList = async { homeRepository.getUpcomingEvent().take(5) }
-            upcomingEventList.await().let { eventList ->
-                if (eventList.isEmpty()) {
-                   fetchEvent()
-                } else {
-                    _upcomingEvent.postValue(UIState.Success(eventList))
-                }
-            }
-        } catch (e: Exception) {
-            UIState.Error(e.message.toString())
         }
     }
 
     fun getFinishedEvent() = viewModelScope.launch {
         _finishedEvent.postValue(UIState.Loading)
         try {
-            val upcomingEventList = async { homeRepository.getFinishedEvent().take(5) }
-            upcomingEventList.await().let { eventList ->
+            val finishedEventList = async { homeRepository.getFinishedEvent() }
+            finishedEventList.await().let { eventList ->
                 if (eventList.isEmpty()) {
                     fetchEvent()
                 } else {
@@ -86,5 +56,10 @@ class ExploreViewModel(private val homeRepository: HomeRepository) : ViewModel()
         } catch (e: Exception) {
             UIState.Error(e.message.toString())
         }
+    }
+
+    fun updateEventBookmark(event: EventModel) = viewModelScope.launch {
+        homeRepository.updateEventBookmark(event)
+        getFinishedEvent()
     }
 }

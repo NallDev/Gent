@@ -24,7 +24,20 @@ class HomeRepositoryImpl(
         }
     }
 
-    override suspend fun getUpcomingEvent(): List<EventModel> = localDatasource.getUpcomingEvent().map { DataMapper.entityToDomain(it) }
+    override suspend fun getUpcomingEvent(): List<EventModel> {
+        val bookmarkEvent = localDatasource.getEventBookmark()
+        return localDatasource.getUpcomingEvent().map { DataMapper.eventEntityToDomain(it, bookmarkEvent.any { bookmark -> bookmark.id == it.id }) }
+    }
 
-    override suspend fun getFinishedEvent(): List<EventModel> = localDatasource.getFinishedEvent().map { DataMapper.entityToDomain(it) }
+    override suspend fun getFinishedEvent(): List<EventModel> {
+        val bookmarkEvent = localDatasource.getEventBookmark()
+        return localDatasource.getFinishedEvent().map { DataMapper.eventEntityToDomain(it, bookmarkEvent.any { bookmark -> bookmark.id == it.id }) }
+    }
+
+    override suspend fun getEventBookmark(): List<EventModel> = localDatasource.getEventBookmark().map { DataMapper.bookmarkEntityToDomain(it) }
+
+    override suspend fun updateEventBookmark(event: EventModel) {
+        val bookmarkEvent = DataMapper.eventModelToBookmarkEntity(event)
+        localDatasource.updateEventBookmark(bookmarkEvent)
+    }
 }

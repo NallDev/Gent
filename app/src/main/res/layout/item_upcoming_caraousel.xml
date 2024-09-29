@@ -35,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:background="@drawable/rectangle_round_8"
-            android:backgroundTint="@color/colorSurface40"/>
+            android:backgroundTint="@color/colorBackgroundLabel"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.carousel.MaskableFrameLayout>

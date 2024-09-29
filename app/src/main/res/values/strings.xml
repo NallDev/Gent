@@ -21,4 +21,10 @@
     <string name="seats_left">%d Seats left</string>
     <string name="seats_left_new_line">%d\nSeats left</string>
     <string name="finished_event">Finished Event</string>
+
+    <string name="upcoming_event_empty_msg">No upcoming event available :(</string>
+    <string name="finished_event_empty_msg">No finished event available :(</string>
+    <string name="search_for_events">Search for events</string>
+    <string name="your_bookmark">Your Bookmark</string>
+    <string name="your_bookmark_is_empty">Your bookmark is empty</string>
 </resources>

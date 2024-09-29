@@ -19,5 +19,6 @@
 
     <color name="outline">#cecbd2</color>
 
-    <color name="colorSurface40">#66121212</color>
+    <color name="colorBackgroundLabel">#CC645858</color>
+    <color name="colorGray">#6e6e6e</color>
 </resources>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorBackground"
-    android:id="@+id/swipeRefreshLayout"
     tools:context=".ui.fragment.explore.ExploreFragment">
 
     <androidx.core.widget.NestedScrollView
@@ -18,71 +18,144 @@
 
             <TextView
                 android:id="@+id/upcomingLabel"
+                style="@style/TextAppearance.Gent.Headline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/upcoming_events"
-                style="@style/TextAppearance.Gent.Headline2"
-                android:layout_marginTop="24dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/upcoming_events"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvSeeAllUpcoming"
+                style="@style/TextAppearance.Gent.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:drawablePadding="8dp"
                 android:text="@string/see_all"
                 android:textColor="@color/outline"
-                android:drawablePadding="8dp"
-                android:layout_marginEnd="16dp"
-                style="@style/TextAppearance.Gent.Body1"
                 app:drawableEndCompat="@drawable/ic_arrow_end"
+                app:layout_constraintBottom_toBottomOf="@id/upcomingLabel"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/upcomingLabel"
-                app:layout_constraintBottom_toBottomOf="@id/upcomingLabel"/>
+                app:layout_constraintTop_toTopOf="@id/upcomingLabel" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvUpcomingEvent"
                 android:layout_width="match_parent"
                 android:layout_height="224dp"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@id/upcomingLabel"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                android:layout_marginHorizontal="16dp"/>
+                app:layout_constraintTop_toBottomOf="@id/upcomingLabel" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/upcomingLoading"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/upcomingLabel"
+                app:strokeWidth="0dp">
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tvUpcomingNoData"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.Gent.BodyMedium"
+                android:textAlignment="center"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:visibility="gone"
+                android:textColor="@color/colorError"
+                app:layout_constraintStart_toStartOf="@id/rvUpcomingEvent"
+                app:layout_constraintEnd_toEndOf="@id/rvUpcomingEvent"
+                app:layout_constraintTop_toTopOf="@id/rvUpcomingEvent"
+                app:layout_constraintBottom_toBottomOf="@id/rvUpcomingEvent"/>
 
             <TextView
                 android:id="@+id/finishedLabel"
+                style="@style/TextAppearance.Gent.Headline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/finished_event"
-                style="@style/TextAppearance.Gent.Headline2"
-                android:layout_marginTop="24dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/finished_event"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rvUpcomingEvent"/>
+                app:layout_constraintTop_toBottomOf="@id/rvUpcomingEvent" />
 
             <TextView
                 android:id="@+id/tvSeeAllFinished"
+                style="@style/TextAppearance.Gent.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:drawablePadding="8dp"
                 android:text="@string/see_all"
                 android:textColor="@color/outline"
-                android:drawablePadding="8dp"
-                android:layout_marginEnd="16dp"
-                style="@style/TextAppearance.Gent.Body1"
                 app:drawableEndCompat="@drawable/ic_arrow_end"
+                app:layout_constraintBottom_toBottomOf="@id/finishedLabel"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/finishedLabel"
-                app:layout_constraintBottom_toBottomOf="@id/finishedLabel"/>
+                app:layout_constraintTop_toTopOf="@id/finishedLabel" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFinishedEvent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:minHeight="80dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/finishedLabel"/>
+                app:layout_constraintTop_toBottomOf="@id/finishedLabel" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/finishedLoading"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/finishedLabel"
+                app:strokeWidth="0dp">
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tvFinishedNoData"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.Gent.BodyMedium"
+                android:textAlignment="center"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/colorError"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@id/rvFinishedEvent"
+                app:layout_constraintEnd_toEndOf="@id/rvFinishedEvent"
+                app:layout_constraintTop_toTopOf="@id/rvFinishedEvent"
+                app:layout_constraintBottom_toBottomOf="@id/rvFinishedEvent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
