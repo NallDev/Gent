@@ -27,4 +27,13 @@
     <string name="search_for_events">Search for events</string>
     <string name="your_bookmark">Your Bookmark</string>
     <string name="your_bookmark_is_empty">Your bookmark is empty</string>
+    <string name="date">Date</string>
+    <string name="location">Location</string>
+    <string name="organizer">Organizer</string>
+    <string name="register">Register</string>
+    <string name="afrinaldi">Afrinaldi</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="afrinaldi_genz0_gmail_com">afrinaldi.genz0@gmail.com</string>
+    <string name="about_event">About Event</string>
 </resources>

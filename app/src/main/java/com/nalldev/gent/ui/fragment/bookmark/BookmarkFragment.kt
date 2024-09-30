@@ -1,5 +1,6 @@
 package com.nalldev.gent.ui.fragment.bookmark
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.nalldev.gent.R
 import com.nalldev.gent.databinding.FragmentBookmarkBinding
 import com.nalldev.gent.domain.models.EventModel
+import com.nalldev.gent.ui.activity.detail.DetailActivity
 import com.nalldev.gent.ui.adapter.EventAdapter
 import com.nalldev.gent.utils.SpacingItemDecoration
 import com.nalldev.gent.utils.UIState
@@ -27,9 +29,15 @@ class BookmarkFragment : Fragment() {
             }
 
             override fun onItemClicked(eventData: EventModel) {
+                activity?.let {
+                    val intent = Intent(it, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EVENT_DATA, eventData)
+                    it.startActivity(intent)
+                }
             }
         }
     }
+
     private val bookmarkAdapter by lazy { EventAdapter(eventAdapterListener) }
 
     override fun onCreateView(
@@ -87,8 +95,8 @@ class BookmarkFragment : Fragment() {
         rvBookmarkEvent.adapter = bookmarkAdapter
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 }

@@ -1,5 +1,6 @@
 package com.nalldev.gent.ui.fragment.finished
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.nalldev.gent.R
 import com.nalldev.gent.databinding.FragmentFinishedBinding
 import com.nalldev.gent.domain.models.EventModel
+import com.nalldev.gent.ui.activity.detail.DetailActivity
 import com.nalldev.gent.ui.adapter.EventAdapter
 import com.nalldev.gent.utils.SpacingItemDecoration
 import com.nalldev.gent.utils.UIState
@@ -27,6 +29,11 @@ class FinishedFragment : Fragment() {
             }
 
             override fun onItemClicked(eventData: EventModel) {
+                activity?.let {
+                    val intent = Intent(it, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EVENT_DATA, eventData)
+                    it.startActivity(intent)
+                }
             }
         }
     }
@@ -47,7 +54,11 @@ class FinishedFragment : Fragment() {
         initObserver()
         initView()
         initListener()
+    }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.getFinishedEvent()
     }
 
     private fun initObserver() {
@@ -84,8 +95,6 @@ class FinishedFragment : Fragment() {
         rvFinishedEvent.itemAnimator = null
         rvFinishedEvent.adapter = finishedEventAdapter
         svFinishedEvent.setupWithSearchBar(binding.sbFinishedEvent)
-
-        viewModel.getFinishedEvent()
     }
 
     private fun initListener() = with(binding) {
@@ -106,8 +115,8 @@ class FinishedFragment : Fragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 }

@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".MainApplication"
@@ -17,6 +18,9 @@
         android:theme="@style/Theme.Gent"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activity.detail.DetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -28,8 +32,7 @@
         <activity
             android:name=".ui.activity.main.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing">
-        </activity>
+            android:windowSoftInputMode="adjustNothing"></activity>
     </application>
 
 </manifest>

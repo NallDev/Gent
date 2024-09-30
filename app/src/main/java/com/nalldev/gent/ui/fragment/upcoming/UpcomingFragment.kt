@@ -1,5 +1,6 @@
 package com.nalldev.gent.ui.fragment.upcoming
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.nalldev.gent.R
 import com.nalldev.gent.databinding.FragmentUpcomingBinding
 import com.nalldev.gent.domain.models.EventModel
+import com.nalldev.gent.ui.activity.detail.DetailActivity
 import com.nalldev.gent.ui.adapter.EventAdapter
 import com.nalldev.gent.utils.SpacingItemDecoration
 import com.nalldev.gent.utils.UIState
@@ -27,6 +29,11 @@ class UpcomingFragment : Fragment() {
             }
 
             override fun onItemClicked(eventData: EventModel) {
+                activity?.let {
+                    val intent = Intent(it, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EVENT_DATA, eventData)
+                    it.startActivity(intent)
+                }
             }
         }
     }
@@ -46,6 +53,11 @@ class UpcomingFragment : Fragment() {
         initObserver()
         initView()
         initListener()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getUpcomingEvent()
     }
 
     private fun initObserver() {
@@ -82,8 +94,6 @@ class UpcomingFragment : Fragment() {
         rvUpcomingEvent.itemAnimator = null
         rvUpcomingEvent.adapter = upcomingEventAdapter
         svUpcomingEvent.setupWithSearchBar(binding.sbUpcomingEvent)
-
-        viewModel.getUpcomingEvent()
     }
 
     private fun initListener() = with(binding) {
@@ -104,8 +114,8 @@ class UpcomingFragment : Fragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 }

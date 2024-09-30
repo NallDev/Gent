@@ -11,14 +11,18 @@ import com.nalldev.gent.databinding.ItemUpcomingCaraouselBinding
 import com.nalldev.gent.domain.models.EventModel
 import com.nalldev.gent.utils.DateHelper
 
-class ExploreAdapter : ListAdapter<EventModel, ExploreAdapter.ViewHolder>(this) {
-    inner class ViewHolder(val binding : ItemUpcomingCaraouselBinding) : RecyclerView.ViewHolder(binding.root) {
+class ExploreAdapter(val eventListener: EventListener? = null) : ListAdapter<EventModel, ExploreAdapter.ViewHolder>(this) {
+    inner class ViewHolder(private val binding : ItemUpcomingCaraouselBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(eventModel: EventModel) {
             binding.ivImageEvent.load(eventModel.image) {
                 crossfade(true)
                 error(R.drawable.event)
             }
             binding.tvDateEvent.text = DateHelper.changeFormat("yyyy-MM-dd HH:mm:ss", "dd'\n'MMM", eventModel.beginTime)
+
+            binding.root.setOnClickListener {
+                eventListener?.onItemClicked(eventModel)
+            }
         }
     }
 
@@ -35,5 +39,9 @@ class ExploreAdapter : ListAdapter<EventModel, ExploreAdapter.ViewHolder>(this) 
         override fun areItemsTheSame(oldItem: EventModel, newItem: EventModel): Boolean = oldItem.id == newItem.id
 
         override fun areContentsTheSame(oldItem: EventModel, newItem: EventModel): Boolean = oldItem == newItem
+    }
+
+    interface EventListener {
+        fun onItemClicked(eventData: EventModel) {}
     }
 }

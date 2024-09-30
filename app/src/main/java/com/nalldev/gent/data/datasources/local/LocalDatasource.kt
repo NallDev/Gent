@@ -2,6 +2,7 @@ package com.nalldev.gent.data.datasources.local
 
 import com.nalldev.gent.data.models.EventBookmarkEntity
 import com.nalldev.gent.data.models.EventEntity
+import com.nalldev.gent.utils.DatabaseException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -11,22 +12,42 @@ class LocalDatasource(
     private val ioDispatcher: CoroutineDispatcher
 ) {
     suspend fun getUpcomingEvent(): List<EventEntity> = withContext(ioDispatcher) {
-        eventDao.getUpcomingEvent()
+        try {
+            eventDao.getUpcomingEvent()
+        } catch (e: Exception) {
+            throw DatabaseException("Failed to load upcoming events from database")
+        }
     }
 
     suspend fun getFinishedEvent(): List<EventEntity> = withContext(ioDispatcher) {
-        eventDao.getFinishedEvent()
+        try {
+            eventDao.getFinishedEvent()
+        } catch (e: Exception) {
+            throw DatabaseException("Failed to load finished events from database")
+        }
     }
 
     suspend fun updateEvents(active: Int, events: List<EventEntity>) = withContext(ioDispatcher) {
-        eventDao.updateEventData(active, events)
+        try {
+            eventDao.updateEventData(active, events)
+        } catch (e: Exception) {
+            throw DatabaseException("Failed to update events in database")
+        }
     }
 
     suspend fun getEventBookmark(): List<EventBookmarkEntity> = withContext(ioDispatcher) {
-        eventBookmarkDao.getEventBookmark()
+        try {
+            eventBookmarkDao.getEventBookmark()
+        } catch (e: Exception) {
+            throw DatabaseException("Failed to load bookmark events from database")
+        }
     }
 
     suspend fun updateEventBookmark(event: EventBookmarkEntity) = withContext(ioDispatcher) {
-        eventBookmarkDao.updateEventBookmark(event)
+        try {
+            eventBookmarkDao.updateEventBookmark(event)
+        } catch (e: Exception) {
+            throw DatabaseException("Failed to update bookmark event in database")
+        }
     }
 }

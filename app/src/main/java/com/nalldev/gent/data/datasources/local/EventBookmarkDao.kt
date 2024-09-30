@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.nalldev.gent.data.models.EventBookmarkEntity
-import com.nalldev.gent.data.models.EventEntity
 
 @Dao
 interface EventBookmarkDao {

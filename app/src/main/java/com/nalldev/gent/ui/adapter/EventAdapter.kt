@@ -33,9 +33,16 @@ class EventAdapter(val eventListener: EventListener? = null) : ListAdapter<Event
 
         fun changeBookmark(eventData: EventModel) {
             binding.bookmarkToggleButton.isChecked = eventData.isBookmark
+            initListener(eventData)
+        }
 
+        private fun initListener(eventData: EventModel) {
             binding.bookmarkToggleButton.setOnClickListener {
                 eventListener?.onBookmarkClicked(eventData)
+            }
+
+            binding.root.setOnClickListener {
+                eventListener?.onItemClicked(eventData)
             }
         }
     }

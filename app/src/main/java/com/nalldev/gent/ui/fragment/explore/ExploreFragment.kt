@@ -1,17 +1,20 @@
 package com.nalldev.gent.ui.fragment.explore
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
 import com.google.android.material.carousel.HeroCarouselStrategy
 import com.nalldev.gent.R
 import com.nalldev.gent.databinding.FragmentExploreBinding
+import com.nalldev.gent.domain.models.EventModel
+import com.nalldev.gent.ui.activity.detail.DetailActivity
+import com.nalldev.gent.ui.activity.main.MainActivity
 import com.nalldev.gent.ui.adapter.ExploreAdapter
 import com.nalldev.gent.ui.adapter.EventAdapter
 import com.nalldev.gent.utils.SpacingItemDecoration
@@ -24,9 +27,33 @@ class ExploreFragment : Fragment() {
 
     private val viewModel by activityViewModel<ExploreViewModel>()
 
-    private val upcomingEventAdapter by lazy { ExploreAdapter() }
+    private val upcomingEventListener by lazy {
+        object : ExploreAdapter.EventListener {
+            override fun onItemClicked(eventData: EventModel) {
+                activity?.let {
+                    val intent = Intent(it, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EVENT_DATA, eventData)
+                    it.startActivity(intent)
+                }
+            }
+        }
+    }
 
-    private val finishedEventAdapter by lazy { EventAdapter() }
+    private val upcomingEventAdapter by lazy { ExploreAdapter(upcomingEventListener) }
+
+    private val finishedEventListener by lazy {
+        object : EventAdapter.EventListener {
+            override fun onItemClicked(eventData: EventModel) {
+                activity?.let {
+                    val intent = Intent(it, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EVENT_DATA, eventData)
+                    it.startActivity(intent)
+                }
+            }
+        }
+    }
+
+    private val finishedEventAdapter by lazy { EventAdapter(finishedEventListener) }
 
     private val snapHelper by lazy { CarouselSnapHelper() }
 
@@ -44,6 +71,13 @@ class ExploreFragment : Fragment() {
         initObserver()
         initView()
         initListener()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        viewModel.getUpcomingEvent()
+        viewModel.getFinishedEvent()
     }
 
     private fun initObserver() {
@@ -109,18 +143,15 @@ class ExploreFragment : Fragment() {
         finishedEventAdapter.hideBookmark()
         rvFinishedEvent.addItemDecoration(SpacingItemDecoration(1, 40, true))
         rvFinishedEvent.adapter = finishedEventAdapter
-
-        viewModel.getUpcomingEvent()
-        viewModel.getFinishedEvent()
     }
 
     private fun initListener() = with(binding) {
         tvSeeAllUpcoming.setOnClickListener {
-            findNavController().navigate(R.id.action_menu_explore_to_menu_upcoming)
+            (activity as? MainActivity)?.binding?.bottomBar?.selectedItemId = R.id.menu_upcoming
         }
 
         tvSeeAllFinished.setOnClickListener {
-            findNavController().navigate(R.id.action_menu_explore_to_menu_finished)
+            (activity as? MainActivity)?.binding?.bottomBar?.selectedItemId = R.id.menu_finished
         }
 
         swipeRefreshLayout.setOnRefreshListener {
@@ -129,8 +160,8 @@ class ExploreFragment : Fragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 }

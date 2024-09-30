@@ -21,4 +21,9 @@
 
     <color name="colorBackgroundLabel">#E6E7D9D9</color>
     <color name="colorGray">#747474</color>
+    <color name="colorPrimary20">#335669FF</color>
+
+
+    <color name="colorBackground80">#CCFFFFFF</color>
+    <color name="colorBackground20">#33FFFFFF</color>
 </resources>

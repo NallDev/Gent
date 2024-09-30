@@ -7,6 +7,7 @@ import com.nalldev.gent.di.datasourceModule
 import com.nalldev.gent.di.networkModule
 import com.nalldev.gent.di.repositoryModule
 import com.nalldev.gent.di.viewModelModule
+import com.nalldev.gent.di.workManagerModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -27,7 +28,8 @@ class MainApplication : Application() {
                 databaseModule,
                 datasourceModule,
                 repositoryModule,
-                viewModelModule
+                viewModelModule,
+                workManagerModule
             ))
         }
     }
