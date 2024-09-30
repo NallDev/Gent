@@ -1,14 +1,17 @@
 package com.nalldev.gent.data.repositories
 
 import com.nalldev.gent.data.datasources.local.LocalDatasource
+import com.nalldev.gent.data.datasources.preference.PreferenceDatasource
 import com.nalldev.gent.data.datasources.remote.RemoteDatasource
 import com.nalldev.gent.domain.models.EventModel
 import com.nalldev.gent.domain.repositories.HomeRepository
 import com.nalldev.gent.utils.DataMapper
+import kotlinx.coroutines.flow.Flow
 
 class HomeRepositoryImpl(
     private val remoteDatasource: RemoteDatasource,
-    private val localDatasource: LocalDatasource
+    private val localDatasource: LocalDatasource,
+    private val preferenceDatasource: PreferenceDatasource
 ) : HomeRepository {
 
     override suspend fun fetchEvent(active: Int, keyword: String?): List<EventModel> {
@@ -39,5 +42,13 @@ class HomeRepositoryImpl(
     override suspend fun updateEventBookmark(event: EventModel) {
         val bookmarkEvent = DataMapper.eventModelToBookmarkEntity(event)
         localDatasource.updateEventBookmark(bookmarkEvent)
+    }
+
+    override fun getIsDarkMode(): Flow<Boolean> {
+        return preferenceDatasource.isDarkMode
+    }
+
+    override suspend fun setIsDarkMode(isDarkMode: Boolean) {
+        preferenceDatasource.setIsDarkMode(isDarkMode)
     }
 }
