@@ -38,10 +38,10 @@ class ExploreViewModel(private val eventRepository: EventRepository) : ViewModel
                     UIState.Success(upcomingEventList)
                 } catch (e: AppException) {
                     _toastEvent.postValue(e.message)
-                    UIState.Error(e.message.toString())
+                    UIState.Error
                 } catch (e: Exception) {
                     _toastEvent.postValue(e.message)
-                    UIState.Error(e.message.toString())
+                    UIState.Error
                 }
             }
 
@@ -51,10 +51,10 @@ class ExploreViewModel(private val eventRepository: EventRepository) : ViewModel
                     UIState.Success(finishedEventList)
                 } catch (e: AppException) {
                     _toastEvent.postValue(e.message)
-                    UIState.Error(e.message.toString())
+                    UIState.Error
                 } catch (e: Exception) {
                     _toastEvent.postValue(e.message)
-                    UIState.Error(e.message.toString())
+                    UIState.Error
                 }
             }
 
@@ -76,9 +76,10 @@ class ExploreViewModel(private val eventRepository: EventRepository) : ViewModel
             }
         } catch (e: AppException) {
             _toastEvent.postValue(e.message)
-            UIState.Error(e.message.toString())
+            UIState.Error
         } catch (e: Exception) {
-            UIState.Error(e.message.toString())
+            _toastEvent.postValue(e.message)
+            UIState.Error
         }
     }
 
@@ -95,9 +96,10 @@ class ExploreViewModel(private val eventRepository: EventRepository) : ViewModel
             }
         } catch (e: AppException) {
             _toastEvent.postValue(e.message)
-            UIState.Error(e.message.toString())
+            UIState.Error
         } catch (e: Exception) {
-            UIState.Error(e.message.toString())
+            _toastEvent.postValue(e.message)
+            UIState.Error
         }
     }
 }

@@ -27,10 +27,10 @@ class BookmarkViewModel(
             _bookmarkEvent.postValue(UIState.Success(bookmarkEventList))
         } catch (e: AppException) {
             _toastEvent.postValue(e.message)
-            UIState.Error(e.message.toString())
+            UIState.Error
         } catch (e: Exception) {
             _toastEvent.postValue(e.message)
-            UIState.Error(e.message.toString())
+            UIState.Error
         }
     }
 

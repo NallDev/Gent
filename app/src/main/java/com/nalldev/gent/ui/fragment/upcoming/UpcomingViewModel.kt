@@ -35,10 +35,10 @@ class UpcomingViewModel(
                     UIState.Success(upcomingEventList)
                 } catch (e: AppException) {
                     _toastEvent.postValue(e.message)
-                    UIState.Error(e.message.toString())
+                    UIState.Error
                 } catch (e: Exception) {
                     _toastEvent.postValue(e.message)
-                    UIState.Error(e.message.toString())
+                    UIState.Error
                 }
             }
 
@@ -59,9 +59,10 @@ class UpcomingViewModel(
             }
         } catch (e: AppException) {
             _toastEvent.postValue(e.message)
-            UIState.Error(e.message.toString())
+            UIState.Error
         } catch (e: Exception) {
-            UIState.Error(e.message.toString())
+            _toastEvent.postValue(e.message)
+            UIState.Error
         }
     }
 

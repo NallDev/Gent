@@ -37,6 +37,6 @@ class PreferenceDatasource(
 
     companion object {
         private val IS_DARK_MODE_KEY = booleanPreferencesKey("isDarkMode")
-        val IS_NOTIFICATION_ENABLED_KEY = booleanPreferencesKey("isNotificationEnabled")
+        private val IS_NOTIFICATION_ENABLED_KEY = booleanPreferencesKey("isNotificationEnabled")
     }
 }

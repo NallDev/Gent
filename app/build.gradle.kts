@@ -38,6 +38,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
 }
 
 dependencies {
@@ -69,8 +72,6 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
 
     implementation(libs.coil)
-
-    implementation(libs.shimmer)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
